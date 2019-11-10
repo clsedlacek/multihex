@@ -22,9 +22,6 @@ function generateColorsCommandPart(channelPaths, colorDataHSB) {
 
 	// build mask and fill command parts for each color
 	for (const color of colorDataHSB) {
-		console.log('color data:');
-		console.dir(color);
-
 		// path to current hue's mask
 		const currentMaskPath = `hue_${color.templateHue}_mask.gif`;
 

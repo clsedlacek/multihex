@@ -25,9 +25,6 @@ function RGBToHSB(r,g,b) {
 	const minRGB = Math.min(rPercentage, Math.min(gPercentage, bPercentage));
 	const maxRGB = Math.max(rPercentage, Math.max(gPercentage, bPercentage));
 	const diff = maxRGB - minRGB;
-	console.log('min: '+minRGB);
-	console.log('max: '+maxRGB);
-	console.log('diff: '+diff);
 
 	// calculate hue component based on max RGB value
 	// equal to min- indicates grey
@@ -36,17 +33,14 @@ function RGBToHSB(r,g,b) {
 	}
 	// red max
 	else if (maxRGB === rPercentage) {
-		console.log('max red');
 		hue = (60 * ((gPercentage - bPercentage) / diff) + 360) % 360;
 	}
 	// green max
 	else if (maxRGB === gPercentage) {
-		console.log('max green');
 		hue = (60 * ((bPercentage - rPercentage) / diff) + 120) % 360;
 	}
 	// blue max
 	else {
-		console.log('max blue');
 		hue = (60 * ((rPercentage - gPercentage) / diff) + 240) % 360;
 	}
 
@@ -76,12 +70,7 @@ function hueToPercentage(hue) {
 // converts a hex color string in format '#ff00ff' to HSB color value object
 function hexToHSB(hex) {
 	const rgb = hexToRGB(hex);
-	console.log('hex: '+hex);
-	console.log('rgb: ');
-	console.dir(rgb);
 	const hsb = RGBToHSB(rgb.r, rgb.g, rgb.b);
-	console.log('hsb:');
-	console.dir(hsb);
 	return hsb;
 }
 
@@ -143,9 +132,6 @@ function convertHexColorData(hexColorData) {
 		targetBrightness: 100 // full brightness
 	}
 	];
-
-	console.log('hsbColorData:');
-	console.dir(hsbColorData);
 
 	return hsbColorData;
 }
