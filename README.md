@@ -18,6 +18,10 @@ This program is free to use but [donations are always appreciated!](https://ko-f
 
 Better documentation coming soon- meanwhile, refer to `test.js` and `multihex.js` for an example of usage and accepted color data format.
 
+# Formatting images for Multihex
+
+Better documentation coming soon- meanwhile, [refer to the following tutorial infographic](https://www.deviantart.com/amusedinsanity/art/Tricolor-Hexacolor-Pose-Tutorial-for-CS4-206687253) for creating images compatible with Multihex (thank you to amusedinsanity for creating this tutorial!)
+
 
 # License
 
