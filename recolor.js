@@ -5,46 +5,6 @@ const hueToPercentage = require('./colorutil.js').hueToPercentage;
 const tempNameBase = 'hbstemp';
 const fuzzPercentage = 1;
 
-const testColorDataHSB = [
-	{
-		templateHue: 0, // from red
-		targetHue: 60, // to green
-		targetSaturation: 100, // full saturation
-		targetBrightness: 100 // full brightness
-	},
-	{
-		templateHue: 60, // from yellow
-		targetHue: 90, // to yellow-green
-		targetSaturation: 100, // full saturation
-		targetBrightness: 100 // full  brightness
-	},
-	{
-		templateHue: 120, // from green
-		targetHue: 260, // to purple
-		targetSaturation: 100, // full saturation
-		targetBrightness: 100 // full brightness
-	},
-	{
-		templateHue: 180, // from cyan
-		targetHue: 60, // to green
-		targetSaturation: 100, // full saturation
-		targetBrightness: 100 // full brightness
-	},
-	{
-		templateHue: 240, // from blue
-		targetHue: 20, // to brown
-		targetSaturation: 74, // full saturation
-		targetBrightness: 57 // full brightness
-	},
-	{
-		templateHue: 300, // from magenta
-		targetHue: 60, // to yellow
-		targetSaturation: 100, // full saturation
-		targetBrightness: 100 // full brightness
-	}
-];
-
-
 // generates the part of an avatar recolor command
 // that handles the actual mask creation and channel recoloring
 // dynamically based on input color data
@@ -100,7 +60,7 @@ module.exports = {
 		commandFinal += `convert ${inputPath} -alpha extract ${channelPaths.alpha};`;
 
 		// generate part of IM commands that creates masks and alters color channels
-		commandFinal += generateColorsCommandPart(channelPaths, testColorDataHSB);
+		commandFinal += generateColorsCommandPart(channelPaths, colorDataHSB);
 		commandFinal += `convert ${tempNameBase}_?.gif -set colorspace HSB -combine ${outputPath};`;
 		commandFinal += `convert ${outputPath} ${channelPaths.alpha} -alpha Off -compose CopyOpacity -composite ${outputPath}`;
 

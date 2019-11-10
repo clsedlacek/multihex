@@ -1,5 +1,6 @@
 const path = require('path');
 const recolor = require('./recolor.js').recolor;
+const convertHexColorData = require('./colorutil.js').convertHexColorData;
 
 // expects color data as hex
 module.exports = {
@@ -16,7 +17,8 @@ module.exports = {
 		console.log('output path: '+outputPathFinal); // debug
 
 		// color data used to mask and recolor image
-		const colorDataFinal = colorData;
+		// currently gives test data
+		const colorDataFinal = convertHexColorData(colorData);
 
 		// async recolor with imagemagick
 		try {

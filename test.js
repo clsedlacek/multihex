@@ -15,6 +15,7 @@ const testColorDataHex = [
 	}
 ];
 
+
 multihex('./templateavatar.gif', testColorDataHex).then((res) => {
 	console.log('multihex done');
 });
