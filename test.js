@@ -3,7 +3,7 @@ const multihex = require('./multihex.js').multihex;
 const testColorDataHex = [
 	{
 		templateHex: '#ff0000', // from red
-		targetHex: '#00ff00' // to green
+		targetHex: '#cc8822' // to brown
 	},
 	{
 		templateHex: '#00ff00', // from green

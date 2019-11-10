@@ -1,3 +1,73 @@
+// converts a hex color string in format '#ff00ff' (no shorthand hex colors) to RGB color value object
+function hexToRGB(hex) {
+	// regexp to separate different components of hex color
+	const hexParse = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	// return rgb object if valid 6 digit hex, null otherwise
+	return hexParse ? {
+		// parse hex number into decimal for each color component
+		r: parseInt(hexParse[1], 16),
+		g: parseInt(hexParse[2], 16),
+		b: parseInt(hexParse[3], 16)
+	} : null;
+}
+
+// converts RGB color values into HSV color values
+function RGBToHSB(r,g,b) {
+	// initialize HSB channels with default values
+	let hue = 100, saturation = 100, brightness = 100;
+
+	// convert 0-255 values to a percentage value
+	let rPercentage = (r/255),
+	gPercentage = (g/255),
+	bPercentage = (b/255);
+
+	// find min/max RGB components for calcs
+	const minRGB = Math.min(rPercentage, Math.min(gPercentage, bPercentage));
+	const maxRGB = Math.max(rPercentage, Math.max(gPercentage, bPercentage));
+	const diff = maxRGB - minRGB;
+	console.log('min: '+minRGB);
+	console.log('max: '+maxRGB);
+	console.log('diff: '+diff);
+
+	// calculate hue component based on max RGB value
+	// equal to min- indicates grey
+	if (maxRGB === minRGB) {
+		hue = 0;
+	}
+	// red max
+	else if (maxRGB === rPercentage) {
+		console.log('max red');
+		hue = (60 * ((gPercentage - bPercentage) / diff) + 360) % 360;
+	}
+	// green max
+	else if (maxRGB === gPercentage) {
+		console.log('max green');
+		hue = (60 * ((bPercentage - rPercentage) / diff) + 120) % 360;
+	}
+	// blue max
+	else {
+		console.log('max blue');
+		hue = (60 * ((rPercentage - gPercentage) / diff) + 240) % 360;
+	}
+
+	// calculate saturation
+	if (maxRGB === 0) {
+		saturation = 0;
+	}
+	else {
+		saturation = (diff/maxRGB)*100;
+	}
+
+	// calculate brightness 
+	brightness = maxRGB * 100;
+
+	return {
+		hue,
+		saturation,
+		brightness
+	};
+}
+
 // converts a hue angle (ex. 300 for magenta) to a % of 360 degrees (ex. 83 for magenta)
 function hueToPercentage(hue) {
 	return (hue * 100 / 360);
@@ -6,13 +76,33 @@ function hueToPercentage(hue) {
 // converts a hex color string in format '#ff00ff' to HSB color value object
 function hexToHSB(hex) {
 	const rgb = hexToRGB(hex);
+	console.log('hex: '+hex);
+	console.log('rgb: ');
+	console.dir(rgb);
 	const hsb = RGBToHSB(rgb.r, rgb.g, rgb.b);
+	console.log('hsb:');
+	console.dir(hsb);
 	return hsb;
 }
 
-// converts a set of hex color data to HSB format recognized by image parsing functions
+// converts a set of hex recolor data to HSB format for recoloring functions
 function convertHexColorData(hexColorData) {
 	const hsbColorData = [];
+
+	for (const hexColor of hexColorData) {
+		// convert each hex color to HSB one by one
+		const templateHSB = hexToHSB(hexColor.templateHex);
+		const targetHSB = hexToHSB(hexColor.targetHex);
+
+		// structure for recoloring functions
+		const hsbColor = {
+			templateHue: templateHSB.hue,
+			targetHue: targetHSB.hue,
+			targetSaturation: targetHSB.saturation,
+			targetBrightness: targetHSB.brightness
+		};
+		hsbColorData.push(hsbColor);
+	}
 
 	// debug
 	const testColorDataHSB = [
@@ -54,18 +144,12 @@ function convertHexColorData(hexColorData) {
 	}
 	];
 
-	return testColorDataHSB;
+	console.log('hsbColorData:');
+	console.dir(hsbColorData);
+
+	return hsbColorData;
 }
 
-// converts a hex color string in format '#ff00ff' to RGB color value object
-function hexToRGB(hex) {
-	const rgb = {
-	};
-}
-
-// converts RGB color values into HSV color values
-function RGBToHSB(r,g,b) {
-}
 
 module.exports = {
 	hexToHSB,
