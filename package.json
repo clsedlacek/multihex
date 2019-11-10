@@ -1,0 +1,11 @@
+{
+  "name": "multihex",
+  "version": "1.0.0",
+  "description": "A module that uses ImageMagick to recolor graphical chat avatars",
+  "main": "multihex.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ven Sedlacek",
+  "license": "MIT"
+}
