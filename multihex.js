@@ -19,7 +19,12 @@ module.exports = {
 		const colorDataFinal = colorData;
 
 		// async recolor with imagemagick
-		const res = await recolor(inputPathFinal, colorDataFinal, outputFilePath);
-		return res;
+		try {
+			const res = await recolor(inputPathFinal, colorDataFinal, outputPathFinal);
+			return res;
+		}
+		catch(e) {
+			console.error(`There was an error with Multihex: ${e}`);
+		}
 	}
 };
