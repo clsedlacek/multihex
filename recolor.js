@@ -86,20 +86,23 @@ module.exports = {
 	// expects color data as HSB
 	// returns a promise resolving to output file name
 	recolor: async function(inputPath, colorDataHSB, outputPath) {
-		// setup imagemagick commands
-		// first separate channels
-		let commandFinal = `convert ${inputPath} -colorspace HSB -separate ${tempNameBase}_%d.gif;`;
-
 		// paths to color channels as object
 		const channelPaths = {
 			hue: (tempNameBase+'_0.gif'),
 			saturation: (tempNameBase+'_1.gif'),
 			brightness: (tempNameBase+'_2.gif'),
+			alpha: (tempNameBase+'_alpha.gif')
 		};
+
+		// setup imagemagick commands
+		// first separate channels
+		let commandFinal = `convert ${inputPath} -colorspace HSB -separate ${tempNameBase}_%d.gif;`;
+		commandFinal += `convert ${inputPath} -alpha extract ${channelPaths.alpha};`;
 
 		// generate part of IM commands that creates masks and alters color channels
 		commandFinal += generateColorsCommandPart(channelPaths, testColorDataHSB);
-		commandFinal += `convert ${tempNameBase}_?.gif -set colorspace HSB -combine ${outputPath}`;
+		commandFinal += `convert ${tempNameBase}_?.gif -set colorspace HSB -combine ${outputPath};`;
+		commandFinal += `convert ${outputPath} ${channelPaths.alpha} -alpha Off -compose CopyOpacity -composite ${outputPath}`;
 
 		console.log('command: '); // debug
 		console.log(commandFinal); // debug
