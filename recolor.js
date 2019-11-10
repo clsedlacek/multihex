@@ -32,9 +32,9 @@ const testColorDataHSB = [
 	},
 	{
 		templateHue: 240, // from blue
-		targetHue: 260, // to purple
-		targetSaturation: 100, // full saturation
-		targetBrightness: 100 // full brightness
+		targetHue: 20, // to brown
+		targetSaturation: 74, // full saturation
+		targetBrightness: 57 // full brightness
 	},
 	{
 		templateHue: 300, // from magenta
@@ -48,22 +48,35 @@ const testColorDataHSB = [
 // generates the part of an avatar recolor command
 // that handles the actual mask creation and channel recoloring
 // dynamically based on input color data
-function generateColorsCommandPart(hueChannelPath, colorDataHSB) {
+function generateColorsCommandPart(channelPaths, colorDataHSB) {
+	// get paths to separated channel images
+	const hueChannelPath = channelPaths.hue;
+	const saturationChannelPath = channelPaths.saturation;
+	const brightnessChannelPath = channelPaths.brightness;
+
 	let commandPart = '';
 	let maskCommandPart = '';
 	let fillCommandPart = `convert ${hueChannelPath} -fuzz ${fuzzPercentage}%`;
+	let saturationCommandPart = '';
+	let brightnessCommandPart = '';
 
 	// build mask and fill command parts for each color
 	for (const color of colorDataHSB) {
 		console.log('color data:');
 		console.dir(color);
-		maskCommandPart += `convert ${hueChannelPath} -fuzz ${fuzzPercentage}% -transparent 'hsb(0, 0, ${hueToPercentage(color.templateHue)}%)' -alpha extract hue_${color.templateHue}_mask.gif;`;
-		fillCommandPart += ` -mask hue_${color.templateHue}_mask.gif -fill 'hsb(0, 0%, ${hueToPercentage(color.targetHue)}%)' -opaque 'hsb(0, 0%, ${hueToPercentage(color.templateHue)}%)' +mask`;
+
+		// path to current hue's mask
+		const currentMaskPath = `hue_${color.templateHue}_mask.gif`;
+
+		maskCommandPart += `convert ${hueChannelPath} -fuzz ${fuzzPercentage}% -transparent 'hsb(0, 0, ${hueToPercentage(color.templateHue)}%)' -alpha extract ${currentMaskPath};`;
+		fillCommandPart += ` -mask ${currentMaskPath} -fill 'hsb(0, 0%, ${hueToPercentage(color.targetHue)}%)' -opaque 'hsb(0, 0%, ${hueToPercentage(color.templateHue)}%)' +mask`;
+		saturationCommandPart += `convert ${saturationChannelPath} -mask ${currentMaskPath} -modulate ${color.targetSaturation},100,100 +mask ${saturationChannelPath};`;
+		brightnessCommandPart += `convert ${brightnessChannelPath} -mask ${currentMaskPath} -modulate ${color.targetBrightness},100,100 +mask ${brightnessChannelPath};`;
 	}
 	// add final semicolon to fill command
 	fillCommandPart += ` ${hueChannelPath};`;
 
-	commandPart = maskCommandPart + fillCommandPart;
+	commandPart = maskCommandPart + fillCommandPart + saturationCommandPart + brightnessCommandPart;
 
 	return commandPart;
 }
@@ -73,26 +86,25 @@ module.exports = {
 	// expects color data as HSB
 	// returns a promise resolving to output file name
 	recolor: async function(inputPath, colorDataHSB, outputPath) {
-		// build command
+		// setup imagemagick commands
 		// first separate channels
 		let commandFinal = `convert ${inputPath} -colorspace HSB -separate ${tempNameBase}_%d.gif;`;
-		// next get masks for each color
-		// (temporarily hardcoded values...)
-		// red
-		//commandFinal += `convert ${tempNameBase}_0.gif -fuzz ${fuzzPercentage}% -transparent 'hsb(0, 0, 0%)' -alpha extract redmask.gif;`;
-		// green
-		//commandFinal += `convert ${tempNameBase}_0.gif -fuzz ${fuzzPercentage}% -transparent 'hsb(0, 0, 33%)' -alpha extract greenmask.gif;`;
-		// blue
-		//commandFinal += `convert ${tempNameBase}_0.gif -fuzz ${fuzzPercentage}% -transparent 'hsb(0, 0, 67%)' -alpha extract bluemask.gif;`;
-		// change colors via hue channel
-		//commandFinal += `convert ${tempNameBase}_0.gif -fuzz ${fuzzPercentage}% -fill 'hsb(0, 0, ${hueToPercentage(testColorDataHSB[0].targetHue)}%)' -opaque 'hsb(0, 0, ${hueToPercentage(testColorDataHSB[0].templateHue)}%)' -fill 'hsb(0, 0%, ${hueToPercentage(testColorDataHSB[1].targetHue)}%)' -opaque 'hsb(0, 0%, ${hueToPercentage(testColorDataHSB[1].templateHue)}%)' -fill 'hsb(0, 0%, ${hueToPercentage(testColorDataHSB[2].targetHue)}%)' -opaque 'hsb(0, 0%, ${hueToPercentage(testColorDataHSB[2].templateHue)}%)' ${tempNameBase}_0.gif;`;
-		commandFinal += generateColorsCommandPart((tempNameBase+'_0.gif'), testColorDataHSB);
+
+		// paths to color channels as object
+		const channelPaths = {
+			hue: (tempNameBase+'_0.gif'),
+			saturation: (tempNameBase+'_1.gif'),
+			brightness: (tempNameBase+'_2.gif'),
+		};
+
+		// generate part of IM commands that creates masks and alters color channels
+		commandFinal += generateColorsCommandPart(channelPaths, testColorDataHSB);
 		commandFinal += `convert ${tempNameBase}_?.gif -set colorspace HSB -combine ${outputPath}`;
 
 		console.log('command: '); // debug
 		console.log(commandFinal); // debug
 
-		// execute asynchronously with error handling
+		// execute IM recolor commands asynchronously with error handling
 		try {
 			const res = await execPromise(commandFinal);
 			return res.stdout;
