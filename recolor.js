@@ -2,7 +2,7 @@ const util = require('util');
 const execPromise = util.promisify(require('child_process').exec);
 const hueToPercentage = require('./colorutil.js').hueToPercentage;
 
-const tempDir = './temp/'
+const tempDir = __dirname + '/temp/'
 const tempNameBase = tempDir + 'hbstemp';
 const fuzzPercentage = 1;
 
