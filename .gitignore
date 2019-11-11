@@ -1,4 +1,5 @@
 *.swp
 *.swo
 *.gif
-!templateavatar*
+!templateavatar.gif
+!templateavatar2.gif
