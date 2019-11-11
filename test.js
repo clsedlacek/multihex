@@ -1,4 +1,4 @@
-const multihex = require('./multihex.js').multihex;
+const multihex = require('./multihex.js');
 
 const testColorDataHex = [
 	{
@@ -11,7 +11,7 @@ const testColorDataHex = [
 	},
 	{
 		templateHex: '#00ff00', // from green
-		targetHex: '#333333' // to grey
+		targetHex: '#33ffff' // to cyan
 	},
 	{
 		templateHex: '#00ffff', // from cyan
@@ -27,13 +27,22 @@ const testColorDataHex = [
 	}
 ];
 
+const testPaths = [
+	'./templateavatar.gif',
+	'./templateavatar2.gif'
+];
+
 // test main public function
 const options = {
-	outputDir: '../whclassicrecolor/',
-	outputFileName: '4_o.gif',
+	outputDir: './',
+	outputFileName: 'multihex_o.gif',
 	outputFileSuffix: '_out'
 };
 
-multihex('../whclassic/4.gif', testColorDataHex, options).then((res) => {
+/*multihex.multihex('./templateavatar.gif', testColorDataHex, options).then((res) => {
 	console.log('multihex done');
+});*/
+
+multihex.batchMultihex(testPaths, testColorDataHex, options).then((res) => {
+	console.log('batch multihex done');
 });

@@ -36,15 +36,25 @@ async function multihex(inputFilePath, colorData, options) {
 
 // batch processes an array of image paths using given color data and options
 async function batchMultihex(inputFilePaths, colorData, options) {
-	for (inputPath of inputFilePaths) {
+	const res = [];
+
+	for (const inputPath of inputFilePaths) {
+		console.log('parsing');
+		const inputPathParsed = path.parse(inputPath);
+		const fileOptions = {
+			outputDir: options.outputDir,
+			outputFileName: inputPathParsed.name + (options.outputFileSuffix || '_mhx') + inputPathParsed.ext
+		};
 		try {
-			const res = await multihex(inputPath, colorData, options);
-			return res;
+			const fileRes = await multihex(inputPath, colorData, fileOptions);
+			res.push(fileRes);
 		}
 		catch(e) {
 			console.error(`There was an error batch-processing images with Multihex: ${e}`);
 		}
 	}
+
+	return res;
 }
 
 // expects color data as hex
