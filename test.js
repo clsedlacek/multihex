@@ -3,7 +3,7 @@ const multihex = require('./multihex.js').multihex;
 const testColorDataHex = [
 	{
 		templateHex: '#ff0000', // from red
-		targetHex: '#cc8822' // to brown
+		targetHex: '#aaaaaa' // to light grey
 	},
 	{
 		templateHex: '#ffff00', // from yellow
@@ -27,7 +27,7 @@ const testColorDataHex = [
 	}
 ];
 
-
-multihex('./templateavatar.gif', testColorDataHex).then((res) => {
+// test main public function
+multihex('../whentercolor.gif', testColorDataHex, '../whenterrecolor.gif').then((res) => {
 	console.log('multihex done');
 });

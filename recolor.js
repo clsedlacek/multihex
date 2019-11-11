@@ -2,7 +2,8 @@ const util = require('util');
 const execPromise = util.promisify(require('child_process').exec);
 const hueToPercentage = require('./colorutil.js').hueToPercentage;
 
-const tempNameBase = './temp/hbstemp';
+const tempDir = './temp/'
+const tempNameBase = tempDir + 'hbstemp';
 const fuzzPercentage = 1;
 
 // generates the part of an avatar recolor command
@@ -23,7 +24,7 @@ function generateColorsCommandPart(channelPaths, colorDataHSB) {
 	// build mask and fill command parts for each color
 	for (const color of colorDataHSB) {
 		// path to current hue's mask
-		const currentMaskPath = `hue_${color.templateHue}_mask.gif`;
+		const currentMaskPath = `${tempDir}hue_${color.templateHue}_mask.gif`;
 
 		// extract mask from hue
 		maskCommandPart += `convert ${hueChannelPath} -fuzz ${fuzzPercentage}% -transparent 'hsb(0, 0, ${hueToPercentage(color.templateHue)}%)' -alpha extract ${currentMaskPath};`;
