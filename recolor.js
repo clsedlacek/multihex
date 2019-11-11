@@ -2,7 +2,7 @@ const util = require('util');
 const execPromise = util.promisify(require('child_process').exec);
 const hueToPercentage = require('./colorutil.js').hueToPercentage;
 
-const tempNameBase = 'hbstemp';
+const tempNameBase = './temp/hbstemp';
 const fuzzPercentage = 1;
 
 // generates the part of an avatar recolor command
