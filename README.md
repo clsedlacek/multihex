@@ -6,7 +6,7 @@ This code has currently only been tested on Ubuntu-based operating systems; more
 
 This program is free to use but [donations are always appreciated!](https://ko-fi.com/nventous)
 
-# Installation
+## Installation
 
 1. Download the source code- `git clone https://github.com/clsedlacek/multihex.git` or use the "Clone or download" link above.
 
@@ -14,16 +14,58 @@ This program is free to use but [donations are always appreciated!](https://ko-f
 
 3. Install [ImageMagick](https://imagemagick.org/index.php) (this comes preinstalled on many systems- to check if it's available first, try `convert --version`).
 
-# Usage
+## Usage
 
 Better documentation coming soon- meanwhile, refer to `test.js` and `multihex.js` for an example of usage and accepted color data format.
 
-# Formatting images for Multihex
+The following functions are exposed from `multihex.js`:
+
+### multihex
+
+Usage: `multihex(inputFilePath, colorData, options).then(function(res) { ... });`
+
+#### Params
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| inputFilePath | string | Path to template image |
+| colorData | array<object> | Array of colors to target on the template image (see color data section) |
+| options | object | Options hash (see options below) |
+
+#### Options
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| outputDir | string | Path to directory for output image (uses same directory as input if undefined) |
+| outputFileName | string | Output file name (uses a default name if undefined) |
+
+
+### batchMultihex
+
+Usage: `batchMultihex(inputFilePaths, colorData, options).then(function(res) { ... });`
+
+#### Params
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| inputFilePaths | array<string> | Array of paths to template images (as strings) |
+| colorData | array<object> | Array of colors to target on the template image (see color data section |
+| options | object | Options hash (see options below) |
+
+#### Options
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| outputDir | string | Path to directory for output image (uses same directory as input if undefined) |
+| outputFileSuffix | string | Suffix to append to output file names |
+
+
+## Formatting images for Multihex
 
 Better documentation coming soon- meanwhile, [refer to the following tutorial infographic](https://www.deviantart.com/amusedinsanity/art/Tricolor-Hexacolor-Pose-Tutorial-for-CS4-206687253) for creating images compatible with Multihex (thank you to amusedinsanity for creating this tutorial!)
 
 
-# License
+## License
 
 Multihex uses the MIT license.
 
