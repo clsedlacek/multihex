@@ -64,6 +64,56 @@ Usage: `batchMultihex(inputFilePaths, colorData, options).then(function(res) { .
 | outputFileSuffix | string | Suffix to append to output file names |
 
 
+## Examples
+
+Process a 6-color image with `multihex.multihex()`:
+
+```
+const multihex = require('./multihex');
+
+// path to input (template) image
+const templatePath = (__dirname + '/templateavatar.gif');
+
+// color data is in hex format
+const colorDataHex = [
+	{
+		templateHex: '#ff0000', // from red
+		targetHex: '#aaaaaa' // to light grey
+	},
+	{
+		templateHex: '#ffff00', // from yellow
+		targetHex: '#aa00aa' // to purple
+	},
+	{
+		templateHex: '#00ff00', // from green
+		targetHex: '#33ffff' // to cyan
+	},
+	{
+		templateHex: '#00ffff', // from cyan
+		targetHex: '#00cc00' // to green
+	},
+	{
+		templateHex: '#0000ff', // from blue
+		targetHex: '#eecc00' // to yellow
+	},
+	{
+		templateHex: '#ff00ff', // from magenta
+		targetHex: '#007700' // to green
+	}
+];
+
+const options = {
+	outputDir: (__dirname + '/'),
+	outputFileName: 'avatar_recolor.gif'
+};
+
+multihex.multihex(templatePath, colorDataHex, options).then(res => {
+	console.log('Conversion finished!');
+});
+
+```
+
+
 ## Formatting images for Multihex
 
 Better documentation coming soon- meanwhile, [refer to the following tutorial infographic](https://www.deviantart.com/amusedinsanity/art/Tricolor-Hexacolor-Pose-Tutorial-for-CS4-206687253) for creating images compatible with Multihex (thank you to amusedinsanity for creating this tutorial!)
