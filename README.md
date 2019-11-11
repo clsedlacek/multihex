@@ -44,8 +44,8 @@ Usage: `multihex(inputFilePath, colorData, options).then(function(res) { ... });
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
-| outputDir | string | Path to directory for output image (uses same directory as input if undefined) |
-| outputFileName | string | Output file name (uses a default name if undefined) |
+| outputDir (optional) | string | Path to directory for output image (uses same directory as input if undefined) |
+| outputFileName (optional) | string | Output file name (uses a default name if undefined) |
 
 ---
 
@@ -67,8 +67,8 @@ Usage: `batchMultihex(inputFilePaths, colorData, options).then(function(res) { .
 
 | Property | Type | Description |
 | -------- | ---- | ----------- |
-| outputDir | string | Path to directory for output image (uses same directory as input if undefined) |
-| outputFileSuffix | string | Suffix to append to output file names |
+| outputDir (optional) | string | Path to directory for output image (uses same directory as input if undefined) |
+| outputFileSuffix (optional) | string | Suffix to append to output file names (uses a default `_mhx` if undefined) |
 
 ---
 
