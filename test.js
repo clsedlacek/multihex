@@ -23,11 +23,17 @@ const testColorDataHex = [
 	},
 	{
 		templateHex: '#ff00ff', // from magenta
-		targetHex: '#eecc00' // to yellow
+		targetHex: '#007700' // to green
 	}
 ];
 
 // test main public function
-multihex('../whentercolor.gif', testColorDataHex, '../whenterrecolor.gif').then((res) => {
+const options = {
+	outputDir: '../whclassicrecolor/',
+	outputFileName: '4_o.gif',
+	outputFileSuffix: '_out'
+};
+
+multihex('../whclassic/4.gif', testColorDataHex, options).then((res) => {
 	console.log('multihex done');
 });
