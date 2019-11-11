@@ -22,6 +22,8 @@ The following functions are exposed from `multihex.js`:
 
 ### multihex
 
+Recolors a single image with given color data
+
 Usage: `multihex(inputFilePath, colorData, options).then(function(res) { ... });`
 
 #### Params
@@ -41,6 +43,8 @@ Usage: `multihex(inputFilePath, colorData, options).then(function(res) { ... });
 
 
 ### batchMultihex
+
+Batch recolors multiple images with the same color data
 
 Usage: `batchMultihex(inputFilePaths, colorData, options).then(function(res) { ... });`
 
