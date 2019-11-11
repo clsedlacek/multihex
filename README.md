@@ -6,6 +6,12 @@ This code has currently only been tested on Ubuntu-based operating systems; more
 
 This program is free to use but [donations are always appreciated!](https://ko-fi.com/nventous)
 
+* [Installation](#installation)
+* [Functions](#functions)
+* [Examples](#examples)
+* [Formatting images for Multihex](#formatting-images-for-multihex)
+* [License](#license)
+
 ---
 
 ## Installation
@@ -18,13 +24,7 @@ This program is free to use but [donations are always appreciated!](https://ko-f
 
 ---
 
-## Usage
-
-Better documentation coming soon- meanwhile, refer to `test.js` and `multihex.js` for an example of usage and accepted color data format.
-
-The following functions are exposed from `multihex.js`:
-
----
+## Functions
 
 ### multihex
 
