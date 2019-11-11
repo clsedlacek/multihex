@@ -1,4 +1,5 @@
-// test main public function
+// test batch public function
+
 const multihex = require('./multihex.js');
 
 const testColorDataHex = [
@@ -28,12 +29,16 @@ const testColorDataHex = [
 	}
 ];
 
+const testPaths = [
+	'./templateavatar.gif',
+	'./templateavatar2.gif'
+];
+
 const options = {
 	outputDir: './',
-	outputFileName: 'multihex_o.gif',
+	outputFileSuffix: '_out'
 };
 
-multihex.multihex('./templateavatar.gif', testColorDataHex, options).then((res) => {
-	console.log('multihex done');
+multihex.batchMultihex(testPaths, testColorDataHex, options).then((res) => {
+	console.log('batch multihex done');
 });
-
