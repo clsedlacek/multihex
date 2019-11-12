@@ -32,6 +32,8 @@ Recolors a single image with given color data
 
 Usage: `multihex(inputFilePath, colorData, options).then(function(res) { ... });`
 
+Returns a string with the path to the recolored image
+
 #### Params
 
 | Param | Type | Description |
@@ -54,6 +56,8 @@ Usage: `multihex(inputFilePath, colorData, options).then(function(res) { ... });
 Batch recolors multiple images with the same color data
 
 Usage: `batchMultihex(inputFilePaths, colorData, options).then(function(res) { ... });`
+
+Returns an array of strings containing the recolored image paths
 
 #### Params
 
@@ -116,7 +120,8 @@ const options = {
 };
 
 multihex.multihex(templatePath, colorDataHex, options).then(res => {
-	console.log('Conversion finished!');
+	console.log('Conversion finished! Recolored image at '+res);
+	// 'Conversion finished! Recolored image at /projectdir/avatar_recolor.gif'
 });
 
 ```
