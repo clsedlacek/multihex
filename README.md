@@ -1,6 +1,6 @@
 # Multihex
 
-Multihex is a small module for recoloring specially-formated chat avatar images (sometimes called "tricolor" or "hexcolor"). It uses Node.js and ImageMagick.
+Multihex is a small module for recoloring specially-formatted chat avatar images (sometimes called "tricolor" or "hexcolor"). It uses Node.js and ImageMagick.
 
 This code has currently only been tested on Ubuntu-based operating systems; more support coming later. It will likely work elsewhere (especially on other Linux OSes) but try at your own risk.
 
