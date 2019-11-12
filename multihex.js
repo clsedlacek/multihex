@@ -27,7 +27,7 @@ async function multihex(inputFilePath, colorData, options) {
 		// async recolor with imagemagick
 		try {
 			const res = await recolor(inputPathFinal, colorDataFinal, outputPathFinal);
-			return res;
+			return outputPathFinal;
 		}
 		catch(e) {
 			console.error(`There was an error with Multihex: ${e}`);
